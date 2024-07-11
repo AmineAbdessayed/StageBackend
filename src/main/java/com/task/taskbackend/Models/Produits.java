@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Data
@@ -27,5 +29,11 @@ public class Produits {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "stock_id")
     private Stock stock;
+
+
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
+    private List<Product_Promotion> produitPromotions;
 
 }
