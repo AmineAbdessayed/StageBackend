@@ -1,11 +1,17 @@
 package com.task.taskbackend.Services;
 
+import com.task.taskbackend.Models.Produits;
 import com.task.taskbackend.Models.Stock;
 import com.task.taskbackend.Repositories.StockRepository;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -20,10 +26,10 @@ public class StockService {
              stockRepository.save(stock);
         return stock;
     }
-
-    public List<Stock> GetAllStock(){
-
-       return stockRepository.findAll();
+    public List<Stock> GetAllStock() {
+        return stockRepository.findAll().stream()
+                .peek(stock -> Hibernate.initialize(stock.getProduits()))
+                .collect(Collectors.toList());
     }
 
     public Optional<Stock> getStockById(Long id) {
@@ -39,6 +45,7 @@ public class StockService {
         return stockRepository.save(stock);
     }
 
+
     public void deleteStock(Long id) {
         stockRepository.deleteById(id);
     }
@@ -46,7 +53,13 @@ public class StockService {
 
         return stockRepository.findByName(name);
     }
-
+    public List<Produits> getProduitsByStockId(Long stockID) {
+        Stock stock = stockRepository.findById(stockID).orElse(null);
+        if (stock != null) {
+            return new ArrayList<>(stock.getProduits());
+        }
+        return Collections.emptyList();
+    }
 
 
 }

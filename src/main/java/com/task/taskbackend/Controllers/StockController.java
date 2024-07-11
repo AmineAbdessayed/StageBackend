@@ -1,5 +1,6 @@
 package com.task.taskbackend.Controllers;
 
+import com.task.taskbackend.Models.Produits;
 import com.task.taskbackend.Models.Stock;
 import com.task.taskbackend.Services.StockService;
 import lombok.RequiredArgsConstructor;
@@ -58,5 +59,9 @@ public class StockController {
             stockService.getStockByName(name);
             return ResponseEntity.ok().build();
     }
-
+    @GetMapping("/produit/{idStock}")
+    public ResponseEntity<List<Produits>> getChambresByBlocId(@PathVariable Long idStock) {
+        List<Produits> chambres = stockService.getProduitsByStockId(idStock);
+        return ResponseEntity.ok(chambres);
+    }
 }

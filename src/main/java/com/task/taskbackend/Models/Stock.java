@@ -27,8 +27,8 @@ public class Stock {
     private Long MaxQuantity;
 
 
-    @OneToMany(mappedBy = "stock", fetch = FetchType.EAGER)
-    @JsonManagedReference
+    @OneToMany(mappedBy = "stock", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Produits> produits;
 
 
