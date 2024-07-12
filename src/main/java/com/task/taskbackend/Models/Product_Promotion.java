@@ -13,17 +13,16 @@ import lombok.*;
 
 public class Product_Promotion {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Id
+    @EmbeddedId
+    private ProductPromotionKey id;
+
+
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @MapsId("productId")
     private Produits product;
 
-    @Id
     @ManyToOne
-    @JoinColumn(name = "promotion_id")
+    @MapsId("promotionId")
     private Promotions promotion;
 
     private float discountAmount;

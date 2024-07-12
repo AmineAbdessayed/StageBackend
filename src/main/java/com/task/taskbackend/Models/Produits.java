@@ -36,4 +36,17 @@ public class Produits {
     @JsonBackReference
     private List<Product_Promotion> produitPromotions;
 
+    @Override
+    public String toString() {
+        return "Produits{" +
+                "id=" + id +
+                ", libelle='" + libelle + '\'' +
+                ", description='" + description + '\'' +
+                ", prixHt=" + prixHt +
+                ", prixHc=" + prixHc +
+                ", tauxTva='" + tauxTva + '\'' +
+                ", stock=" + stock +
+                ", produitPromotions=" + produitPromotions +
+                '}';
+    }
 }

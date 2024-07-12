@@ -1,5 +1,6 @@
 package com.task.taskbackend.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,5 +24,6 @@ public class Promotions {
     private Etat etat;
 
     @OneToMany(mappedBy = "promotion", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Product_Promotion> produitPromotions;
 }
