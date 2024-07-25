@@ -1,5 +1,6 @@
 package com.task.taskbackend.Controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.task.taskbackend.Models.Produits;
 import com.task.taskbackend.Services.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -10,10 +11,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import org.slf4j.Logger;
-
-
+import org.springframework.web.multipart.MultipartFile;
 
 
 @RestController
@@ -42,17 +43,26 @@ public class ProduitController {
         Produits produits = produitsService.getProduitsById(id);
         return ResponseEntity.ok(produits);
     }
+
+
     @PostMapping("/addProduits")
-    public ResponseEntity<Produits> addProduits(@RequestBody Produits produits, @RequestParam("stockId") Long stockId) {
-        logger.info("Request received to add product: {}", produits);
+    public ResponseEntity<Produits> addProduits(
+            @RequestPart Produits produits,
+            @RequestParam("stockId") Long stockId,
+            @RequestPart("file") MultipartFile file) throws IOException {
         logger.info("Stock ID: {}", stockId);
-        Produits createdProduits = produitsService.createProduits(produits, stockId);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdProduits);
+
+            Produits createdProduits = produitsService.createProduits(produits, stockId, file);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdProduits);
     }
 
+
+
+
+
     @PutMapping("/updateProduit/{id}")
-    public ResponseEntity<Produits> updateProduits(@PathVariable Long id, @RequestBody Produits produits) {
-        Produits updatedProduits = produitsService.updateProduits(id, produits);
+    public ResponseEntity<Produits> updateProduits(@PathVariable Long id, @RequestPart("produits") Produits produits, @RequestPart("file") MultipartFile file) throws IOException {
+        Produits updatedProduits = produitsService.updateProduits(id, produits, file);
         return ResponseEntity.ok(updatedProduits);
     }
 

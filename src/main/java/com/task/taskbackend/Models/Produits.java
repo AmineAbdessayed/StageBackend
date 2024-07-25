@@ -13,40 +13,34 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Produits {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Long id;
+    private Long id;
 
-    private  String libelle;
-    private  String description;
-    private  float prixHt;
-    private  float prixHc;
+    private String libelle;
+    private String description;
+    private float prixHt;
+    private float prixHc;
     private String tauxTva;
+    @Enumerated(EnumType.STRING)
+    private Color color;
+    @Lob
+    @Column(length = 1000000)
+    private byte[] displayPicture;
+
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "stock_id")
     private Stock stock;
 
 
-
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference
     private List<Product_Promotion> produitPromotions;
 
-    @Override
-    public String toString() {
-        return "Produits{" +
-                "id=" + id +
-                ", libelle='" + libelle + '\'' +
-                ", description='" + description + '\'' +
-                ", prixHt=" + prixHt +
-                ", prixHc=" + prixHc +
-                ", tauxTva='" + tauxTva + '\'' +
-                ", stock=" + stock +
-                ", produitPromotions=" + produitPromotions +
-                '}';
-    }
+
 }

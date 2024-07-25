@@ -18,6 +18,6 @@ public class UserDto {
   private  String Company;
   private  String Job;
   private  String Country;
-  private  String Addresse;
+  private  String addresse;
   private  String Phone;
 }
