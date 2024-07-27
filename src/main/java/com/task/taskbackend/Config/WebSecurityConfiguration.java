@@ -44,6 +44,7 @@ public class WebSecurityConfiguration {
                                 .requestMatchers("/api/produits/**").permitAll()   // Permit all endpoints under /api/produits without authentication
                                 .requestMatchers("/api/stocks/**").permitAll()      // Require authentication for endpoints under /api/stocks
                                 .requestMatchers("/api/promotions/**").permitAll()      // Require authentication for endpoints under /api/stocks
+                                .requestMatchers("/api/pack/**").permitAll()      // Require authentication for endpoints under /api/stocks
 
                                 .requestMatchers("/api/admin/**").hasAnyAuthority(UserRole.ADMIN.name())  // Require ADMIN role for /api/admin/**
                                 .requestMatchers("/api/employee/**").hasAnyAuthority(UserRole.EMPLOYEE.name())  // Require EMPLOYEE role for /api/employee/**
